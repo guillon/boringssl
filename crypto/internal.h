@@ -118,7 +118,12 @@
 #define alignof __alignof
 #endif
 #else
+#if defined(__GNUC__) && !defined(__STRICT_ANSI__) && defined(__STDC_VERSION__) && __STDC_VERSION__ < 201103L
+#define alignas(x) __attribute__((aligned(x)))
+#define alignof __alignof__
+#else
 #include <stdalign.h>
+#endif
 #endif
 
 #if !defined(OPENSSL_NO_THREADS) && \
